@@ -15,7 +15,7 @@ exported module functions
 =========================
 
 `addHookSite(object, property)`
------------------------------
+-------------------------------
 
 Adds a hook site for the function available at `object[property]`.  The
 hook site is returned as an `HookSite` object.  Once called, the specified
@@ -23,14 +23,14 @@ function is "hooked".  If the function is already hooked, the already
 existing hook site is returned.
 
 `getHookSite(object, property)`
------------------------------
+-------------------------------
 
-Returns a `HookSite` object for the function available at `object[property`,
+Returns a `HookSite` object for the function available at `object[property]`,
 if a hook site has been added.  If no hook site has been added to the function,
 returns `null`.
 
 `ignoreHooks(func)`
------------------
+-------------------
 
 Runs the specified function disabling all hooks for the duration of the
 function.
@@ -42,7 +42,7 @@ The object returned from the `addHookSite()` and `getHookSite()` functions
 is a `HookSite` object.  These objects have the following methods:
 
 `HookSite.addHooks(hooks)`
-------------------------
+--------------------------
 
 Adds the specified hooks to the hook site.  The `hooks` parameter should be
 an object with the following properties:
@@ -75,7 +75,7 @@ The parameters to these functions:
 * `e` - the exception thrown during the hooked function invocation
 
 `HookSite.removeHooks(hooks)`
----------------------------
+-----------------------------
 
 Removes the specified hooks to the hook site.  The `hooks` parameter must be
 the same object previously passed to the `addHooks()` function.
@@ -84,6 +84,7 @@ the same object previously passed to the `addHooks()` function.
 Example
 =======
 
+    //------------------------------------------------
     function before(receiver, args) {
         console.log("--> document.createElement(" + args[0] + ")")
         this.userData.invocations++
@@ -102,7 +103,9 @@ Example
         exceptions:  0,
     }
 
+    //------------------------------------------------
     var hookSite = HookLib.addHookSite(document, "createElement")
+
     hookSite.addHooks({
         before:   before,
         after:    after,
@@ -110,12 +113,19 @@ Example
         userData: userData
     })
 
+    //------------------------------------------------
     function windowResized() {
         console.log("window resized")
     }
 
+    //------------------------------------------------
     document.createElement("b")
     document.createElement(null)
+
+    HookLib.ignoreHooks(function() {
+        document.createElement("a")
+    })
+
     document.createElement("i")
 
     console.log("invocations: " + userData.invocations)
@@ -131,3 +141,9 @@ This will produce the following output:
     <-- document.createElement(i): [object HTMLElement]
     invocations: 3
     exceptions:  1
+
+etc
+===
+
+Some ideas from ["AOP aspect of JavaScript with Dojo"](http://lazutkin.com/blog/2008/may/18/aop-aspect-javascript-dojo/)
+by Eugene Lazutkin.

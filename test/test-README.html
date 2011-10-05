@@ -3,6 +3,7 @@ testing the code in the README
 <script src="../hooklib.js"></script>
 
 <script>
+    //------------------------------------------------
     function before(receiver, args) {
         console.log("--> document.createElement(" + args[0] + ")")
         this.userData.invocations++
@@ -21,7 +22,9 @@ testing the code in the README
         exceptions:  0,
     }
 
+    //------------------------------------------------
     var hookSite = HookLib.addHookSite(document, "createElement")
+
     hookSite.addHooks({
         before:   before,
         after:    after,
@@ -29,12 +32,19 @@ testing the code in the README
         userData: userData
     })
 
+    //------------------------------------------------
     function windowResized() {
         console.log("window resized")
     }
 
+    //------------------------------------------------
     document.createElement("b")
     document.createElement(null)
+
+    HookLib.ignoreHooks(function() {
+        document.createElement("a")
+    })
+
     document.createElement("i")
 
     console.log("invocations: " + userData.invocations)
