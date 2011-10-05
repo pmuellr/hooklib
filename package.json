@@ -1,0 +1,18 @@
+{
+  "name":         "hooklib",
+  "description":  "functions to hook existing functions",
+  "keywords":     ["javascript", "language", "aspect"],
+  "author":       "Patrick Mueller",
+  "version":      "0.1.0",
+  },
+  "licenses": [{
+    "type":       "MIT",
+    "url":        "http://github.com/pmuellr/hooklib/raw/master/LICENSE"
+  }],
+  "main" :        "hooklib.js",
+  "homepage":     "https://github.com/pmuellr/hooklib",
+  "repository":   {
+    "type":       "git",
+    "url":        "git://github.com/pmuellr/hooklib.git"
+  }
+}

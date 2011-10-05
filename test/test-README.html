@@ -1,0 +1,42 @@
+testing the code in the README
+
+<script src="../hooklib.js"></script>
+
+<script>
+    function before(receiver, args) {
+        console.log("--> document.createElement(" + args[0] + ")")
+        this.userData.invocations++
+    }
+
+    function after(receiver, args, result) {
+        console.log("<-- document.createElement(" + args[0] + "): " + result)
+    }
+
+    function except(receiver, args, e) {
+        this.userData.exceptions++
+    }
+
+    var userData = {
+        invocations: 0,
+        exceptions:  0,
+    }
+
+    var hookSite = HookLib.addHookSite(document, "createElement")
+    hookSite.addHooks({
+        before:   before,
+        after:    after,
+        except:   except,
+        userData: userData
+    })
+
+    function windowResized() {
+        console.log("window resized")
+    }
+
+    document.createElement("b")
+    document.createElement(null)
+    document.createElement("i")
+
+    console.log("invocations: " + userData.invocations)
+    console.log("exceptions:  " + userData.exceptions)
+</script>
